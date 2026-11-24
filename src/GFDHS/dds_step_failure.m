@@ -1,0 +1,13 @@
+function [fit,xdir,result,fit1] = dds_step_failure(data,reason)
+% An explicit rejected candidate; no fabricated route or direct completion.
+fit = Inf; fit1 = Inf; xdir = [];
+result = struct('fit',Inf,'length',Inf,'path',zeros(0,3), ...
+    'curve',zeros(0,3),'path1',zeros(0,6),'path2',zeros(0,6),'endnode',data.S, ...
+    'dirpath',[],'xdir',[],'xdir1',[],'dis_len',Inf,'curve_len',Inf, ...
+    'penetration_len',Inf,'energy_total',Inf,'curve_count',0,'palh1',0, ...
+    'success',false,'status','guard_failed','failure_reason',reason,'reason',reason);
+if isfield(data,'junction_enabled') && isscalar(data.junction_enabled) && logical(data.junction_enabled)
+    result.junction=dds_junction_empty(); result.junction.status=reason;
+end
+dds_step_stats('reject',reason);
+end

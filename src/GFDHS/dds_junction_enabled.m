@@ -1,0 +1,6 @@
+function enabled=dds_junction_enabled(data)
+% A gated geometry repair, never active for a first/main pipe.
+enabled=isfield(data,'junction_enabled') && isscalar(data.junction_enabled) && ...
+    logical(data.junction_enabled) && isfield(data,'mm') && data.mm>1 && ...
+    isfield(data,'junction_parents') && ~isempty(data.junction_parents);
+end
